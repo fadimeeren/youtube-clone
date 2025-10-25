@@ -12,9 +12,9 @@ const Shorts = ({data}) => {
         </div>
 <div className="flex gap-4 pb-4 overflow-x-auto">
     {data.map(
-       (short, key) => <Link to="/" key={key}>
+       (short, key) => <Link to={`/watch?v=${short.videoId}`} key={key} className="group">
         <div className="w-48 h-80 relative">
-            <img src={short.thumbnail[1].url} className="size-full object-cover hover:scale105"/>
+            <img src={short.thumbnail[1].url} className="size-full object-cover group-hover:scale-105"/>
 
             <div className="absulute bottom-0 right-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-4"> 
                 <h3 className="text-sm mb-1 line-clamp-2">

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import SkeletonLoader from "../../component/loader/skeleton-loader";
+import Error from "../../component/error";
 import Shorts from "../../component/shorts";
+import Card from "../../component/card";
+import { useSearchParams } from "react-router-dom";
+
 const Feed = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -14,7 +18,7 @@ const Feed = () => {
     api
       .get("/home")
       .then((res) => setData(res.data.data))
-      .catch((err) => setError(error.message))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
 
@@ -31,7 +35,11 @@ const Feed = () => {
       <div className="space-y-8">
         <Shorts data={shortList[0].data} />
 
-        <h2> Videolar</h2>
+      <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 lg:gap-6"> 
+        {videos.map((video, key) => (
+          <Card video={video} key={key}/>
+        ))}
+      </div>
 
         <Shorts data={shortList[1].data} />
       </div>
