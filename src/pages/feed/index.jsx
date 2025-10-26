@@ -10,20 +10,29 @@ const Feed = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get("category");
 
-  //sayfa yüklenince
+  // sayfa yüklenince
   useEffect(() => {
     setLoading(true);
 
+    // istek atılacak adresi belirle
+    const url = !selectedCategory
+      ? "/home"
+      : selectedCategory === "trendler"
+      ? "/trending"
+      : `/search?query=${selectedCategory}`;
+
     api
-      .get("/home")
+      .get(url)
       .then((res) => setData(res.data.data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [selectedCategory]);
 
   // veriyi kategorize et
-  const shortList = data.filter((item) => item.type === "shorts_listing");
+  const shortLists = data.filter((item) => item.type === "shorts_listing");
   const videos = data.filter((item) => item.type === "video");
 
   if (loading) return <SkeletonLoader />;
@@ -33,20 +42,18 @@ const Feed = () => {
   return (
     <div className="page">
       <div className="space-y-8">
-        <Shorts data={shortList[0].data} />
+        {shortLists[0] && <Shorts data={shortLists[0].data} />}
 
-      <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 lg:gap-6"> 
-        {videos.map((video, key) => (
-          <Card video={video} key={key}/>
-        ))}
-      </div>
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6">
+          {videos.map((video, key) => (
+            <Card video={video} key={key} />
+          ))}
+        </div>
 
-        <Shorts data={shortList[1].data} />
+        {shortLists[1] && <Shorts data={shortLists[1].data} />}
       </div>
     </div>
   );
-
-  return <div>feed</div>;
 };
 
 export default Feed;
