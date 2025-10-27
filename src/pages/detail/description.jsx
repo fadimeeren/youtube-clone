@@ -1,7 +1,18 @@
-const Description = () => {
+import millify from "millify";
+import { useState } from "react";
+
+
+const Description = ({video}) => {
+  const [isOpen,setIsOpen] = useState(false)
+ 
   return (
-    <div>Description
-    
+    <div className="bg-[#272727] mt-4 p-2 cursor-pointer hover:bg-[#272727]/80 transition rounded-md"> 
+    <div className="flex gap-4 mb-4 font-semibold"> 
+      <p> {millify(video.viewCount)} görüntüleme</p>
+      <p>{video.publishDate}</p>
+    </div>
+
+    <p className="whitespace-pre-wrap" onClick={()=> setIsOpen(!isOpen)}> {isOpen ? video.description :video.description.slice(0, 100)}</p>
     </div>
   )
 }

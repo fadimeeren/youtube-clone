@@ -4,6 +4,8 @@ import api from "../../utils/api";
 import Spinner from "../../component/loader/spinner";
 import Error from "../../component/error";
 import ReactPlayer from "react-player";
+import Description from "./description";
+import Comments from "./comments"
 
 const Detail = () => {
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,6 @@ const Detail = () => {
     {/*Video Alanı */}
 
     <div className="flex-1 lg:max-w-[854px]">
-
       {/*Oynatıcı */}
       <div className="w-full aspect-video rounded-xl overflow-hidden mb-4">
         {" "}
@@ -52,14 +53,26 @@ const Detail = () => {
       {/*Bilgiler */}
       <div className="spance-y-4">
         <h1 className="text-xl font-bold line-clamp-2 leading-tight">
-          
           {video.title}
         </h1>
+
+        <ChannelInfo video={video} />
+        <Description video={video} />
+        <Comments videoId={id} />
       </div>
     </div>
 
     {/*Önerilen Videolar */}
-    <div> </div>
+    <div className="lg:w-[400px]">
+      <h2 className="text-lg font-semibold mb-4 hidden lg:block">
+        İlgili Videolar
+      </h2>
+      <div className="flex flex-col gap-5">
+        {video.relatedVideos.data.map((video, key) => (
+          <Card video={video} key={key} isRow/>
+        ))}
+      </div>
+    </div>
   </div>;
 };
 
