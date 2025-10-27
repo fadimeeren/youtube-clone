@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import api from "../../utils/api";
+import Spinner from "../../component/loader/spinner";
+import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 const Comments = ({ videoId }) => {
   const [comments, setComments] = useState(null);
@@ -27,7 +29,38 @@ const Comments = ({ videoId }) => {
         placeholder="Yorum ekleyiniz.."
         className="w-full bg-transparent border-b border-[#3e403f] p-2 my-3 outline-none"
       />
-      <div> {comments.data.map((comment, key) => <div key={key}> </div> )}</div>
+      <div>
+        {comments.data.map((comment, key) => (
+          <div
+            key={key}
+            className="flex gap-2 sm:gap-3 items-start px-1 py-3 sm:py-4"
+          >
+            <img
+              src={comment.autorThumbnail[0].url}
+              className="size-8 rounded-full sm:size-10"
+            />
+            <div>
+              <h5 className="flex gap-2 items-center">{comment.authorText}</h5>
+              <span className="text-gray-400 text-sm">{comment.publishedTimeText}</span>
+            </div>
+
+            <p className="whitespace-pre-wrap">{comment.textDisplay}</p>
+
+            <div className="flex items-center gap-5 mt-2">
+              <div className="flex items-center gap-1 comment-field">
+                <AiOutLineLike />
+                <span>{comment.likesCount}</span>
+              </div>
+
+              <div className="comment-field">
+                <AiOutLineDislike />
+              </div>
+
+              <span className="comment-field font-[600] text-xs">yanıtla</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
