@@ -1,9 +1,10 @@
-import React from 'react'
-
-const index = () => {
+const Error = ({message}) => {
   return (
-    <div>index</div>
+    <div>
+      <h1>Üzgünüz bir sorun oluştu</h1>
+      <h2>{message}</h2>
+    </div>
   )
 }
 
-export default index
+export default Error;
