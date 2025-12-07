@@ -1,5 +1,5 @@
 # React + Vite
-#ScreenShoot
+# ScreenShoot
 ![Uploading Youtube clone kısa video.gif…]()
 
 
